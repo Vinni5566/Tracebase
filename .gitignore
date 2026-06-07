@@ -118,3 +118,5 @@ Desktop.ini
 .temp/
 .tmp/
 *.map
+
+.vercel/
