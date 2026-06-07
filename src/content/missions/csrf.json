@@ -1,0 +1,47 @@
+{
+  "id": "csrf",
+  "title": "Cross-Site Request Forgery (CSRF)",
+  "category": "NETWORK",
+  "difficulty": "Intermediate",
+  "tags": ["WEB", "MEDIUM", "OWASP"],
+  "estimatedMinutes": 12,
+  "lessons": 3,
+  "description": "Trick a victim's browser into executing unwanted actions on a trusted site where they are currently authenticated.",
+  "lesson": {
+    "summary": "Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated. CSRF attacks specifically target state-changing requests, not theft of data.",
+    "realWorld": [
+      "Netflix Account Takeover (Attacker changes email without password prompt)",
+      "Bank Transfer Forgery (Auto-submitting hidden form transferring funds)",
+      "Router DNS Hijacking (Changing router settings via admin's browser)"
+    ],
+    "exploits": [
+      "<img src='http://bank.com/transfer?amount=1000&to=hacker'>",
+      "<form action='http://site.com/change-email' method='POST'>...</form><script>document.forms[0].submit()</script>"
+    ],
+    "vulnerableCode": "app.post('/transfer', (req, res) => {\n  const { amount, to } = req.body;\n  // No token verification. If session exists, transfer executes.\n  executeTransfer(req.session.userId, to, amount);\n});",
+    "secureCode": "app.post('/transfer', verifyCsrfToken, (req, res) => {\n  const { amount, to } = req.body;\n  executeTransfer(req.session.userId, to, amount);\n});",
+    "defenses": [
+      "Anti-CSRF Tokens (Synchronizer Token Pattern)",
+      "SameSite Cookie Attribute (Lax or Strict)",
+      "Require re-authentication for sensitive actions"
+    ],
+    "mistakes": [
+      "Using GET requests for state-changing actions",
+      "Relying only on CORS (CORS does not prevent CSRF)",
+      "Assuming APIs without cookies are immune (Basic Auth is also vulnerable)"
+    ],
+    "tips": [
+      "Always use SameSite=Lax for session cookies.",
+      "Implement double-submit cookies for stateless APIs.",
+      "Use modern frameworks that provide CSRF protection out of the box."
+    ]
+  },
+  "arena": {
+    "attackId": "csrf_01",
+    "attackName": "Silent Email Change",
+    "attackVector": "Cross-Origin POST",
+    "attackSeverity": "medium",
+    "attackDescription": "An attacker has hosted a malicious page that auto-submits a POST request to our `/api/user/email` endpoint. Admin is currently logged in.",
+    "correctDefenses": ["csrf_tokens", "samesite_cookies"]
+  }
+}

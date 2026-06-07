@@ -1,0 +1,55 @@
+{
+  "id": "sqli",
+  "title": "SQL Injection (SQLi)",
+  "category": "INJECTION",
+  "difficulty": "Beginner",
+  "tags": [
+    "DATABASE",
+    "CRITICAL",
+    "OWASP"
+  ],
+  "estimatedMinutes": 10,
+  "lessons": 4,
+  "description": "Exploit poorly sanitized database queries to extract sensitive data or bypass authentication.",
+  "lesson": {
+    "summary": "SQL Injection occurs when user input is incorrectly inserted into a database query. This can allow an attacker to read sensitive data, modify database entries, or execute administrative operations.",
+    "realWorld": [
+      "2015 TalkTalk Breach (156k records exposed)",
+      "2011 Sony Pictures Hack (1M+ accounts compromised)",
+      "Heartland Payment Systems (130M credit cards)"
+    ],
+    "exploits": [
+      "' OR '1'='1",
+      "admin' --",
+      "1; DROP TABLE users"
+    ],
+    "vulnerableCode": "const query = `SELECT * FROM users WHERE username = '${req.body.username}' AND password = '${req.body.password}'`;\ndb.execute(query);",
+    "secureCode": "const query = `SELECT * FROM users WHERE username = ? AND password = ?`;\ndb.execute(query, [req.body.username, req.body.password]);",
+    "defenses": [
+      "Use Prepared Statements (Parameterized Queries)",
+      "Use ORMs (Object-Relational Mapping)",
+      "Strict input validation and sanitization"
+    ],
+    "mistakes": [
+      "Concatenating strings to build SQL queries",
+      "Relying solely on client-side validation",
+      "Escaping characters manually instead of using parameterized queries"
+    ],
+    "tips": [
+      "Never trust user input.",
+      "Use least privilege for database accounts.",
+      "Regularly run SAST tools to detect SQLi."
+    ]
+  },
+  "arena": {
+    "attackId": "sql_inject_01",
+    "attackName": "Blind SQL Injection",
+    "attackVector": "Database Query",
+    "attackSeverity": "critical",
+    "attackDescription": "An attacker is attempting to extract the admin password hash by asking true/false questions to the database via the login form.",
+    "correctDefenses": [
+      "param_queries",
+      "orm_usage"
+    ]
+  }
+}

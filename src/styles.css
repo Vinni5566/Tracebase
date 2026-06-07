@@ -1,0 +1,245 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-cyber-cyan: var(--cyber-cyan);
+  --color-cyber-purple: var(--cyber-purple);
+  --color-cyber-navy: var(--cyber-navy);
+  --color-cyber-attack: var(--cyber-attack);
+  --color-cyber-defense: var(--cyber-defense);
+  --color-cyber-gold: var(--cyber-gold);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Force dark mode for MVP */
+:root {
+  --radius: 0.75rem;
+  --sidebar-width: 16rem;
+  --sidebar-width-icon: 3rem;
+
+  --cyber-cyan: oklch(0.82 0.18 200);
+  --cyber-purple: oklch(0.65 0.25 295);
+  --cyber-navy: oklch(0.18 0.06 265);
+  --cyber-attack: oklch(0.68 0.24 22);
+  --cyber-defense: oklch(0.75 0.18 155);
+  --cyber-gold: oklch(0.85 0.16 85);
+
+  --background: oklch(0.12 0.035 265);
+  --foreground: oklch(0.96 0.01 240);
+  --card: oklch(0.17 0.045 265);
+  --card-foreground: oklch(0.96 0.01 240);
+  --popover: oklch(0.17 0.045 265);
+  --popover-foreground: oklch(0.96 0.01 240);
+  --primary: oklch(0.82 0.18 200);
+  --primary-foreground: oklch(0.12 0.035 265);
+  --secondary: oklch(0.24 0.06 270);
+  --secondary-foreground: oklch(0.96 0.01 240);
+  --muted: oklch(0.22 0.05 268);
+  --muted-foreground: oklch(0.72 0.04 250);
+  --accent: oklch(0.65 0.25 295);
+  --accent-foreground: oklch(0.98 0.005 240);
+  --destructive: oklch(0.68 0.24 22);
+  --destructive-foreground: oklch(0.98 0.005 240);
+  --border: oklch(0.3 0.05 265 / 60%);
+  --input: oklch(0.25 0.05 268);
+  --ring: oklch(0.82 0.18 200);
+
+  --sidebar: oklch(0.14 0.04 265);
+  --sidebar-foreground: oklch(0.95 0.01 240);
+  --sidebar-primary: oklch(0.82 0.18 200);
+  --sidebar-primary-foreground: oklch(0.12 0.035 265);
+  --sidebar-accent: oklch(0.22 0.05 268);
+  --sidebar-accent-foreground: oklch(0.96 0.01 240);
+  --sidebar-border: oklch(0.28 0.05 265 / 60%);
+  --sidebar-ring: oklch(0.82 0.18 200);
+
+  --gradient-cyber: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-purple));
+  --gradient-attack: linear-gradient(135deg, var(--cyber-attack), oklch(0.55 0.22 340));
+  --gradient-defense: linear-gradient(135deg, var(--cyber-defense), var(--cyber-cyan));
+  --shadow-glow-cyan: 0 0 40px -8px oklch(0.82 0.18 200 / 0.55);
+  --shadow-glow-purple: 0 0 40px -8px oklch(0.65 0.25 295 / 0.55);
+  --shadow-glow-attack: 0 0 40px -8px oklch(0.68 0.24 22 / 0.55);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-feature-settings: "ss01", "cv11";
+    overscroll-behavior: none;
+  }
+  body {
+    background-image:
+      radial-gradient(at 20% 0%, oklch(0.25 0.12 295 / 0.35) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, oklch(0.25 0.14 200 / 0.3) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  ::selection {
+    background: var(--cyber-cyan);
+    color: var(--cyber-navy);
+  }
+}
+
+@utility cyber-grid {
+  background-image:
+    linear-gradient(oklch(0.82 0.18 200 / 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.82 0.18 200 / 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+@utility text-gradient-cyber {
+  background: var(--gradient-cyber);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glass-panel {
+  background: oklch(0.17 0.045 265 / 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid oklch(0.82 0.18 200 / 0.18);
+}
+
+@utility glow-cyan {
+  box-shadow: var(--shadow-glow-cyan);
+}
+@utility glow-purple {
+  box-shadow: var(--shadow-glow-purple);
+}
+@utility glow-attack {
+  box-shadow: var(--shadow-glow-attack);
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes grid-drift {
+  0% { background-position: 0 0; }
+  100% { background-position: 48px 48px; }
+}
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--cyber-cyan), 0 0 0 0 oklch(0.82 0.18 200 / 0.5); }
+  50% { box-shadow: 0 0 18px var(--cyber-cyan), 0 0 0 8px oklch(0.82 0.18 200 / 0); }
+}
+.animate-scan-line { animation: scan-line 6s linear infinite; }
+.animate-pulse-glow { animation: pulse-glow 2.4s ease-in-out infinite; }
+.animate-float-y { animation: float-y 4s ease-in-out infinite; }
+.animate-grid-drift { animation: grid-drift 12s linear infinite; }
+.animate-radar-sweep { animation: radar-sweep 5s linear infinite; }
+.animate-ticker { animation: ticker 45s linear infinite; }
+.animate-node-pulse { animation: node-pulse 2.4s ease-in-out infinite; }
+
+@utility holo-card {
+  position: relative;
+  background:
+    linear-gradient(135deg, oklch(0.18 0.05 270 / 0.85), oklch(0.14 0.05 285 / 0.7));
+  border: 1px solid oklch(0.82 0.18 200 / 0.28);
+  box-shadow:
+    inset 0 1px 0 oklch(0.82 0.18 200 / 0.18),
+    inset 0 0 30px -12px oklch(0.65 0.25 295 / 0.45),
+    0 12px 50px -24px oklch(0.65 0.25 295 / 0.55);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+}
+@utility holo-shine {
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, oklch(0.82 0.18 200 / 0.22) 50%, transparent 62%);
+  transform: translateX(-130%) skewX(-12deg);
+  transition: transform 0.9s ease;
+}
+.group:hover .holo-shine {
+  transform: translateX(220%) skewX(-12deg);
+}
+@utility neon-edge-cyan {
+  box-shadow:
+    inset 0 0 0 1px oklch(0.82 0.18 200 / 0.4),
+    inset 0 0 24px -8px oklch(0.82 0.18 200 / 0.5),
+    0 0 36px -14px oklch(0.82 0.18 200 / 0.6);
+}
+@utility neon-edge-purple {
+  box-shadow:
+    inset 0 0 0 1px oklch(0.65 0.25 295 / 0.4),
+    inset 0 0 24px -8px oklch(0.65 0.25 295 / 0.5),
+    0 0 36px -14px oklch(0.65 0.25 295 / 0.6);
+}
+@utility neon-edge-gold {
+  box-shadow:
+    inset 0 0 0 1px oklch(0.85 0.16 85 / 0.5),
+    inset 0 0 28px -6px oklch(0.85 0.16 85 / 0.55),
+    0 0 50px -12px oklch(0.85 0.16 85 / 0.6);
+}
+@utility hud-corners {
+  position: relative;
+}
+.hud-corners::before,
+.hud-corners::after,
+.hud-corners > .corner-tr,
+.hud-corners > .corner-bl {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--cyber-cyan);
+}
+.hud-corners::before { top: 6px; left: 6px; border-top: 1px solid; border-left: 1px solid; }
+.hud-corners::after { bottom: 6px; right: 6px; border-bottom: 1px solid; border-right: 1px solid; }
