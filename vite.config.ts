@@ -10,10 +10,6 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
-  // nitro object triggers explicitNitro=true in the library source,
-  // which enables the Nitro deploy plugin outside the Lovable sandbox.
-  // The vercel preset generates .vercel/output in Vercel's Build Output API format.
-  nitro: {
-    preset: "vercel",
-  },
+  // Disable Nitro entirely to build a pure static SPA
+  nitro: false,
 });
